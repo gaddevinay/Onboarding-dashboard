@@ -199,6 +199,7 @@ function App() {
           )}
           {step === 4 && !showUpdateProfile && (
             <Dashboard
+              formData={formData}
               onUpdateProfileClick={() => setShowUpdateProfile(true)}
               onLogout={handleLogout}
             />
