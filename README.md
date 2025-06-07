@@ -1,70 +1,79 @@
-# Getting Started with Create React App
+# 🧭 Onboarding Dashboard – Intern Sprint Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to the **Onboarding Dashboard**, a 5-day sprint intern challenge project. This full-stack web app helps new users onboard quickly, set their preferences, and view their dashboard. Built with a modern stack focusing on usability, authentication, and user profile handling.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🔧 Tech Stack
 
-### `npm start`
+### 🔹 Frontend:
+- React
+- CSS / Tailwind (optional)
+- Axios
+- Framer Motion (for transitions)
+- LocalStorage (for caching user data)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 🔹 Backend:
+- Node.js + Express.js
+- MongoDB (via MongoDB Atlas)
+- Mongoose ODM
+- JWT (Authentication)
+- bcrypt.js (Password hashing)
+- Joi (Input validation)
+- CORS + dotenv
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## 🚀 Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### ✅ Frontend
 
-### `npm run build`
+- 🧾 Multi-step Onboarding Wizard (3 steps)
+  - Step 1: Personal Info (Name, Email)
+  - Step 2: Business Info (Company, Industry, Size)
+  - Step 3: Preferences (Theme, Dashboard Layout)
+  - Input validation on all fields
+  - Smooth transitions using Framer Motion
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- 📊 Dashboard View
+  - Displays user info: name, email, company, industry, size
+  - Shows cards for: Team Members, Active Projects, Notifications
+  - Fully responsive
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- 🌗 Bonus Features
+  - Light/Dark theme switch (saved in preferences)
+  - Data stored in `localStorage` + synced with server
+  - Token-based login persistence
+  - Logout functionality
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+### ✅ Backend
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- 🔐 Authentication Routes
+  - `POST /api/register`: Register a new user
+  - `POST /api/login`: Login and receive a JWT
+  - `GET /api/profile`: Get user info (protected route)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- 🎛 Preferences & Profile
+  - `PATCH /api/profile`: Update user info + preferences
+  - JWT-based authorization
+  - Joi validation on all input fields
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- 📊 Dashboard Summary (Dummy)
+  - `GET /api/dashboard-summary`: Returns counts of team, projects, and notifications
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+## 🖥️ Live Links: [https://onboarding-dashboard-plum.vercel.app](https://onboarding-dashboard-plum.vercel.app)
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## ⚙️ Setup Instructions
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 🖥️ Backend
 
-### Code Splitting
+1. Clone the repo:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```bash
+git clone https://github.com/your-username/Onboarding-dashboard.git
+cd Onboarding-dashboard/backend
