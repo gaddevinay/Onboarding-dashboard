@@ -92,22 +92,7 @@ function App() {
         theme: formData.theme,
         layout: formData.layout,
       });
-      const handleLogout = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        setFormData({
-          name: "",
-          email: "",
-          password: "",
-          company: "",
-          industry: "",
-          size: "",
-          theme: "light",
-          layout: "grid",
-        });
-        setStep(1);
-        document.body.className = "light";
-      };
+      
 
       const res = await axios.patch(
         "https://onboarding-dashboard.onrender.com/api/profile",
@@ -134,7 +119,22 @@ function App() {
       console.error("Error saving profile:", err);
     }
   };
-
+  const handleLogout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        setFormData({
+          name: "",
+          email: "",
+          password: "",
+          company: "",
+          industry: "",
+          size: "",
+          theme: "light",
+          layout: "grid",
+        });
+        setStep(1);
+        document.body.className = "light";
+      };
   const theme = formData.theme || "light";
   document.body.className = theme;
 
