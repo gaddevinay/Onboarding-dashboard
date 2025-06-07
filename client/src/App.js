@@ -23,10 +23,10 @@ function App() {
     layout: "grid",
   });
   const [errors, setErrors] = useState({});
-React.useEffect(() => {
-  const savedUser = JSON.parse(localStorage.getItem("user"));
-  const token = localStorage.getItem("token");
-}, []);
+  React.useEffect(() => {
+    const savedUser = JSON.parse(localStorage.getItem("user"));
+    const token = localStorage.getItem("token");
+  }, []);
 
   const validateStep = () => {
     const err = {};
@@ -65,11 +65,13 @@ React.useEffect(() => {
   const handleSubmit = async () => {
     try {
       const token = localStorage.getItem("token");
-      const { theme, layout } = formData;
 
       await axios.post(
         "https://onboarding-dashboard.onrender.com/api/preferences",
-        { theme, layout },
+        {
+          theme: formData.theme,
+          layout: formData.layout,
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -105,7 +107,6 @@ React.useEffect(() => {
 
   return (
     <div className="container-m">
-      
       <AnimatePresence mode="wait" custom={direction}>
         <motion.div
           key={step + (showUpdateProfile ? "-update" : "")}
