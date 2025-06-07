@@ -34,5 +34,5 @@ router.patch("/profile", authMiddleware, async (req, res) => {
 router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.get("/profile", authMiddleware, getProfile);
-
+router.patch("/profile", authMiddleware, updateProfile);
 module.exports = router;

@@ -25,7 +25,9 @@ export default function UpdateProfile({ formData, handleChange, onSave }) {
       document.body.className = formData.theme;
       onSave(); // close profile view
     } catch (err) {
-      alert("Profile update failed: " + (err.response?.data?.message || err.message));
+      alert(
+        "Profile update failed: " + (err.response?.data?.message || err.message)
+      );
     }
   };
 
