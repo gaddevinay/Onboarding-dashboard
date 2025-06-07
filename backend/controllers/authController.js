@@ -1,18 +1,23 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const Joi = require("joi");
 const User = require("../models/User");
+
+// Schema for profile validation
+const profileSchema = Joi.object({
+  name: Joi.string().min(2).max(50),
+  email: Joi.string().email(),
+});
 
 // Register
 exports.registerUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    // Validate input
     if (!name || !email || !password) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res
@@ -23,9 +28,11 @@ exports.registerUser = async (req, res) => {
     const hashed = await bcrypt.hash(password, 10);
     const user = new User({ name, email, password: hashed });
     await user.save();
+
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: "7d",
     });
+
     res.status(201).json({ token });
   } catch (err) {
     console.error("Register error:", err);
@@ -38,7 +45,6 @@ exports.loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // Validate input
     if (!email || !password) {
       return res
         .status(400)
@@ -73,7 +79,12 @@ exports.getProfile = async (req, res) => {
     res.status(500).json({ message: "Error fetching profile" });
   }
 };
+
+// Update Profile
 exports.updateProfile = async (req, res) => {
+  const { error } = profileSchema.validate(req.body);
+  if (error) return res.status(400).json({ message: error.details[0].message });
+
   try {
     const updates = req.body;
     const user = await User.findByIdAndUpdate(req.userId, updates, {
