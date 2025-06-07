@@ -7,11 +7,16 @@ export default function UpdateProfile({ formData, handleChange, onSave }) {
     const token = localStorage.getItem("token");
 
     try {
-      await axios.patch(
+      const res = await axios.patch(
         "https://onboarding-dashboard.onrender.com/api/profile",
         {
           name: formData.name,
           email: formData.email,
+          company: formData.company,
+          industry: formData.industry,
+          size: formData.size,
+          theme: formData.theme,
+          layout: formData.layout,
         },
         {
           headers: {
@@ -20,10 +25,9 @@ export default function UpdateProfile({ formData, handleChange, onSave }) {
         }
       );
 
-      // Save locally
-      localStorage.setItem("user", JSON.stringify(formData));
-      document.body.className = formData.theme;
-      onSave(); // close profile view
+      localStorage.setItem("user", JSON.stringify(res.data));
+      document.body.className = res.data.theme;
+      onSave();
     } catch (err) {
       alert(
         "Profile update failed: " + (err.response?.data?.message || err.message)

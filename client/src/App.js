@@ -24,8 +24,26 @@ function App() {
   });
   const [errors, setErrors] = useState({});
   React.useEffect(() => {
-    const savedUser = JSON.parse(localStorage.getItem("user"));
     const token = localStorage.getItem("token");
+    if (token) {
+      axios
+        .get("https://onboarding-dashboard.onrender.com/api/profile", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          setFormData((prev) => ({
+            ...prev,
+            ...res.data,
+            password: "", // don't keep password in memory
+          }));
+          localStorage.setItem("user", JSON.stringify(res.data));
+          document.body.className = res.data.theme || "light";
+          setStep(4);
+        })
+        .catch((err) => console.error("Failed to load profile", err));
+    }
   }, []);
 
   const validateStep = () => {
@@ -65,11 +83,15 @@ function App() {
   const handleSubmit = async () => {
     try {
       const token = localStorage.getItem("token");
-      console.log("Token:", token); // Debug: check if token is null/undefined
 
-      await axios.post(
-        "https://onboarding-dashboard.onrender.com/api/preferences",
+      const res = await axios.patch(
+        "https://onboarding-dashboard.onrender.com/api/profile",
         {
+          name: formData.name,
+          email: formData.email,
+          company: formData.company,
+          industry: formData.industry,
+          size: formData.size,
           theme: formData.theme,
           layout: formData.layout,
         },
@@ -80,11 +102,11 @@ function App() {
         }
       );
 
-      localStorage.setItem("user", JSON.stringify(formData));
-      document.body.className = theme;
+      localStorage.setItem("user", JSON.stringify(res.data));
+      document.body.className = res.data.theme;
       setStep(4);
     } catch (err) {
-      console.error("Error saving preferences:", err);
+      console.error("Error saving profile:", err);
     }
   };
 
