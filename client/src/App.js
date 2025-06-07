@@ -65,6 +65,7 @@ function App() {
   const handleSubmit = async () => {
     try {
       const token = localStorage.getItem("token");
+      console.log("Token:", token); // Debug: check if token is null/undefined
 
       await axios.post(
         "https://onboarding-dashboard.onrender.com/api/preferences",
