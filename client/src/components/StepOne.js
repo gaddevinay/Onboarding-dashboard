@@ -7,30 +7,40 @@ export default function StepOne({ nextStep, handleChange, formData, errors, skip
   const handleRegisterAndNext = async () => {
     try {
       // Try to register
-      await axios.post("https://onboarding-dashboard.onrender.com/api/register", {
+      const registerRes = await axios.post("https://onboarding-dashboard.onrender.com/api/register", {
         name: formData.name,
         email: formData.email,
         password: formData.password,
       });
-      nextStep(); // if success, continue to StepTwo
+
+      const token = registerRes.data.token;
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(formData));
+
+      console.log("✅ Registration successful");
+      nextStep(); // Go to StepTwo
     } catch (err) {
       const msg = err.response?.data?.message;
       if (msg?.includes("already exists")) {
         console.log("⚠️ User already exists, attempting login...");
-        // Try login
+
         try {
-          const res = await axios.post("https://onboarding-dashboard.onrender.com/api/register", {
+          const loginRes = await axios.post("https://onboarding-dashboard.onrender.com/api/login", {
             email: formData.email,
             password: formData.password,
           });
-          localStorage.setItem("token", res.data.token);
+
+          const token = loginRes.data.token;
+          localStorage.setItem("token", token);
+          localStorage.setItem("user", JSON.stringify(formData));
+
           console.log("✅ Login successful");
-          skipToDashboard(); // go to dashboard
+          skipToDashboard(); // Go directly to dashboard
         } catch (loginErr) {
-          alert("Login failed: " + (loginErr.response?.data?.message || ""));
+          alert("Login failed: " + (loginErr.response?.data?.message || loginErr.message));
         }
       } else {
-        alert("Registration error: " + msg);
+        alert("Registration error: " + (msg || err.message));
       }
     }
   };
@@ -39,6 +49,7 @@ export default function StepOne({ nextStep, handleChange, formData, errors, skip
     <div className="container">
       <ProgressBar step={1} />
       <h2>Step 1: Personal Info</h2>
+
       <input
         name="name"
         placeholder="Name"
