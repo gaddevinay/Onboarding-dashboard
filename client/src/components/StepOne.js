@@ -3,41 +3,72 @@ import "../App.css";
 import axios from "axios";
 import ProgressBar from "./ProgressBar";
 
-export default function StepOne({ nextStep, handleChange, formData, errors, skipToDashboard }) {
+export default function StepOne({
+  nextStep,
+  handleChange,
+  formData,
+  errors,
+  skipToDashboard,
+}) {
   const handleRegisterAndNext = async () => {
     try {
-      // Try to register
-      const registerRes = await axios.post("https://onboarding-dashboard.onrender.com/api/register", {
-        name: formData.name,
-        email: formData.email,
-        password: formData.password,
-      });
+      const registerRes = await axios.post(
+        "https://onboarding-dashboard.onrender.com/api/register",
+        {
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+        }
+      );
 
       const token = registerRes.data.token;
       localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(formData));
 
+      // Fetch complete user profile and save
+      const profileRes = await axios.get(
+        "https://onboarding-dashboard.onrender.com/api/profile",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      localStorage.setItem("user", JSON.stringify(profileRes.data));
       console.log("✅ Registration successful");
-      nextStep(); // Go to StepTwo
+
+      nextStep();
     } catch (err) {
       const msg = err.response?.data?.message;
       if (msg?.includes("already exists")) {
         console.log("⚠️ User already exists, attempting login...");
 
         try {
-          const loginRes = await axios.post("https://onboarding-dashboard.onrender.com/api/login", {
-            email: formData.email,
-            password: formData.password,
-          });
+          const loginRes = await axios.post(
+            "https://onboarding-dashboard.onrender.com/api/login",
+            {
+              email: formData.email,
+              password: formData.password,
+            }
+          );
 
           const token = loginRes.data.token;
           localStorage.setItem("token", token);
-          localStorage.setItem("user", JSON.stringify(formData));
 
+          // ✅ Fetch user profile after login
+          const profileRes = await axios.get(
+            "https://onboarding-dashboard.onrender.com/api/profile",
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
+
+          localStorage.setItem("user", JSON.stringify(profileRes.data));
           console.log("✅ Login successful");
-          skipToDashboard(); // Go directly to dashboard
+          skipToDashboard();
         } catch (loginErr) {
-          alert("Login failed: " + (loginErr.response?.data?.message || loginErr.message));
+          alert(
+            "Login failed: " +
+              (loginErr.response?.data?.message || loginErr.message)
+          );
         }
       } else {
         alert("Registration error: " + (msg || err.message));
