@@ -83,6 +83,15 @@ function App() {
   const handleSubmit = async () => {
     try {
       const token = localStorage.getItem("token");
+console.log("Sending to PATCH /api/profile:", {
+  name: formData.name,
+  email: formData.email,
+  company: formData.company,
+  industry: formData.industry,
+  size: formData.size,
+  theme: formData.theme,
+  layout: formData.layout,
+});
 
       const res = await axios.patch(
         "https://onboarding-dashboard.onrender.com/api/profile",
