@@ -68,7 +68,7 @@ React.useEffect(() => {
       const { theme, layout } = formData;
 
       await axios.post(
-        "http://localhost:5000/api/preferences",
+        "https://onboarding-dashboard.onrender.com/api/preferences",
         { theme, layout },
         {
           headers: {

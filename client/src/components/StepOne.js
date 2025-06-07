@@ -7,7 +7,7 @@ export default function StepOne({ nextStep, handleChange, formData, errors, skip
   const handleRegisterAndNext = async () => {
     try {
       // Try to register
-      await axios.post("http://localhost:5000/api/register", {
+      await axios.post("https://onboarding-dashboard.onrender.com/api/register", {
         name: formData.name,
         email: formData.email,
         password: formData.password,
@@ -19,7 +19,7 @@ export default function StepOne({ nextStep, handleChange, formData, errors, skip
         console.log("⚠️ User already exists, attempting login...");
         // Try login
         try {
-          const res = await axios.post("http://localhost:5000/api/login", {
+          const res = await axios.post("https://onboarding-dashboard.onrender.com/api/register", {
             email: formData.email,
             password: formData.password,
           });
