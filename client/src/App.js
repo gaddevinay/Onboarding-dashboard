@@ -33,15 +33,22 @@ function App() {
           },
         })
         .then((res) => {
+          console.log("Fetched profile:", res.data);
           setFormData((prev) => ({
             ...prev,
             ...res.data,
-            password: "", // don't keep password in memory
+            password: "",
+            company: res.data.company || "",
+            industry: res.data.industry || "",
+            size: res.data.size || "",
+            theme: res.data.theme || "light",
+            layout: res.data.layout || "grid",
           }));
           localStorage.setItem("user", JSON.stringify(res.data));
           document.body.className = res.data.theme || "light";
           setStep(4);
         })
+
         .catch((err) => console.error("Failed to load profile", err));
     }
   }, []);
@@ -92,7 +99,6 @@ function App() {
         theme: formData.theme,
         layout: formData.layout,
       });
-      
 
       const res = await axios.patch(
         "https://onboarding-dashboard.onrender.com/api/profile",
@@ -120,21 +126,21 @@ function App() {
     }
   };
   const handleLogout = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        setFormData({
-          name: "",
-          email: "",
-          password: "",
-          company: "",
-          industry: "",
-          size: "",
-          theme: "light",
-          layout: "grid",
-        });
-        setStep(1);
-        document.body.className = "light";
-      };
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setFormData({
+      name: "",
+      email: "",
+      password: "",
+      company: "",
+      industry: "",
+      size: "",
+      theme: "light",
+      layout: "grid",
+    });
+    setStep(1);
+    document.body.className = "light";
+  };
   const theme = formData.theme || "light";
   document.body.className = theme;
 
