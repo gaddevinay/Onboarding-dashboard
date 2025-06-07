@@ -5,9 +5,15 @@ const User = require("../models/User");
 
 // Schema for profile validation
 const profileSchema = Joi.object({
-  name: Joi.string().min(2).max(50),
-  email: Joi.string().email(),
+  name: Joi.string().min(2).max(50).required(),
+  email: Joi.string().email().required(),
+  company: Joi.string().allow(""),
+  industry: Joi.string().allow(""),
+  size: Joi.string().allow(""),
+  theme: Joi.string().valid("light", "dark"),
+  layout: Joi.string().valid("grid", "list"),
 });
+
 
 // Register
 exports.registerUser = async (req, res) => {
