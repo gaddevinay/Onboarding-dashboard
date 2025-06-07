@@ -177,7 +177,10 @@ function App() {
               handleChange={handleChange}
               formData={formData}
               errors={errors}
-              skipToDashboard={() => setStep(4)} // ✅ passed here
+              skipToDashboard={() => setStep(4)}
+              updateFormData={(data) =>
+                setFormData((prev) => ({ ...prev, ...data, password: "" }))
+              }
             />
           )}
           {step === 2 && (

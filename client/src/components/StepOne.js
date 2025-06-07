@@ -9,6 +9,8 @@ export default function StepOne({
   formData,
   errors,
   skipToDashboard,
+  updateFormData,
+
 }) {
   const handleRegisterAndNext = async () => {
     try {
@@ -33,6 +35,7 @@ export default function StepOne({
       );
 
       localStorage.setItem("user", JSON.stringify(profileRes.data));
+      updateFormData(profileRes.data);
       console.log("✅ Registration successful");
 
       nextStep();
@@ -52,8 +55,6 @@ export default function StepOne({
 
           const token = loginRes.data.token;
           localStorage.setItem("token", token);
-
-          // ✅ Fetch user profile after login
           const profileRes = await axios.get(
             "https://onboarding-dashboard.onrender.com/api/profile",
             {
@@ -62,6 +63,7 @@ export default function StepOne({
           );
 
           localStorage.setItem("user", JSON.stringify(profileRes.data));
+          updateFormData(profileRes.data);
           console.log("✅ Login successful");
           skipToDashboard();
         } catch (loginErr) {
