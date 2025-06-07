@@ -1,79 +1,114 @@
-# 🧭 Onboarding Dashboard – Intern Sprint Project
+# 🚀 Onboarding Dashboard App
 
-Welcome to the **Onboarding Dashboard**, a 5-day sprint intern challenge project. This full-stack web app helps new users onboard quickly, set their preferences, and view their dashboard. Built with a modern stack focusing on usability, authentication, and user profile handling.
+A full-stack onboarding dashboard web application built with React (frontend) and Node.js/Express + MongoDB (backend). It includes a multi-step onboarding wizard, user preferences, profile management, and JWT authentication.
 
 ---
 
-## 🔧 Tech Stack
+## 📦 Tech Stack
 
-### 🔹 Frontend:
+### Frontend
 - React
-- CSS / Tailwind (optional)
 - Axios
+- CSS or Tailwind
 - Framer Motion (for transitions)
-- LocalStorage (for caching user data)
+- localStorage
 
-### 🔹 Backend:
-- Node.js + Express.js
-- MongoDB (via MongoDB Atlas)
-- Mongoose ODM
-- JWT (Authentication)
-- bcrypt.js (Password hashing)
-- Joi (Input validation)
-- CORS + dotenv
-
----
-
-## 🚀 Features
-
-### ✅ Frontend
-
-- 🧾 Multi-step Onboarding Wizard (3 steps)
-  - Step 1: Personal Info (Name, Email)
-  - Step 2: Business Info (Company, Industry, Size)
-  - Step 3: Preferences (Theme, Dashboard Layout)
-  - Input validation on all fields
-  - Smooth transitions using Framer Motion
-
-- 📊 Dashboard View
-  - Displays user info: name, email, company, industry, size
-  - Shows cards for: Team Members, Active Projects, Notifications
-  - Fully responsive
-
-- 🌗 Bonus Features
-  - Light/Dark theme switch (saved in preferences)
-  - Data stored in `localStorage` + synced with server
-  - Token-based login persistence
-  - Logout functionality
+### Backend
+- Node.js
+- Express
+- MongoDB (Atlas)
+- Mongoose
+- JWT
+- bcrypt
+- Joi (for input validation)
+- dotenv
 
 ---
 
-### ✅ Backend
+## 🔧 Setup Instructions
 
-- 🔐 Authentication Routes
-  - `POST /api/register`: Register a new user
-  - `POST /api/login`: Login and receive a JWT
-  - `GET /api/profile`: Get user info (protected route)
-
-- 🎛 Preferences & Profile
-  - `PATCH /api/profile`: Update user info + preferences
-  - JWT-based authorization
-  - Joi validation on all input fields
-
-- 📊 Dashboard Summary (Dummy)
-  - `GET /api/dashboard-summary`: Returns counts of team, projects, and notifications
-
----
-
-## 🖥️ Live Links: [https://onboarding-dashboard-plum.vercel.app](https://onboarding-dashboard-plum.vercel.app)
----
-
-## ⚙️ Setup Instructions
-
-### 🖥️ Backend
-
-1. Clone the repo:
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/your-username/Onboarding-dashboard.git
-cd Onboarding-dashboard/backend
+cd Onboarding-dashboard
+```
+
+### 2. Install Dependencies
+
+```bash
+# For backend
+cd backend
+npm install
+
+# For frontend
+cd ../frontend
+npm install
+```
+
+### 3. Configure Environment Variables
+
+Create a `.env` file inside the `backend/` folder:
+
+```
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret_key
+```
+
+> You can get `MONGO_URI` from [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) after creating a cluster.
+
+---
+
+### 4. Start the Application
+
+```bash
+# Run backend server
+cd backend
+npm start
+
+# In a new terminal window/tab
+cd frontend
+npm start
+```
+
+---
+
+### 5. Access the App
+
+- Frontend: `http://localhost:3000`
+- Backend API: `http://localhost:5000`
+
+---
+
+## ✨ Features
+
+- 🔐 JWT-based user authentication
+- 🪄 Multi-step onboarding wizard (3 steps)
+- 💼 Save personal + business + preference data
+- 🌙 Theme switcher & layout selector
+- 📊 Dashboard view with cards & update option
+- 💾 Data stored in MongoDB and synced to UI
+- 📱 Fully responsive
+
+---
+
+## 📸 Screenshots
+
+<img src="https://github.com/user-attachments/assets/277721dd-fda3-4b49-b71d-91f839e3538c" width="600" />
+<br/>
+<img src="https://github.com/user-attachments/assets/30ca9ca9-0e78-4deb-b12e-b3471d86338b" width="600" />
+<br/>
+<img src="https://github.com/user-attachments/assets/33d697ec-69df-4e84-a7d5-72ea59a4eef2" width="600" />
+<br/>
+<img src="https://github.com/user-attachments/assets/b71cfc6a-00da-4fdd-84c1-d6215be771e7" width="600" />
+
+---
+
+
+
+## 🧠 Bonus Ideas
+
+- Add Recharts to display weekly activity
+- Add email verification (sendgrid/mailgun)
+- Add user roles or teams in dashboard
