@@ -1,0 +1,38 @@
+.progress-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+.progress-steps {
+  display: flex;
+  align-items: center;
+}
+
+.circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #ccc;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  font-weight: bold;
+}
+
+.circle.active {
+  background: #e91e63; /* pink/red */
+}
+
+.bar {
+  height: 4px;
+  width: 60px;
+  background: #ccc;
+  margin: 0 10px;
+}
+
+.bar.filled {
+  background: #e91e63;
+}
