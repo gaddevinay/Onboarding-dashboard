@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import StepOne from "./components/StepOne";
 import StepTwo from "./components/StepTwo";
 import StepThree from "./components/StepThree";
@@ -23,9 +23,29 @@ function App() {
     layout: "grid",
   });
   const [errors, setErrors] = useState({});
-  React.useEffect(() => {
-    const savedUser = JSON.parse(localStorage.getItem("user"));
+  useEffect(() => {
     const token = localStorage.getItem("token");
+    if (token) {
+      axios
+        .get("https://onboarding-dashboard.onrender.com/api/profile", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          setFormData((prev) => ({
+            ...prev,
+            ...res.data, // load company, industry, theme, layout, etc.
+            password: "", // don't persist password
+          }));
+          localStorage.setItem("user", JSON.stringify(res.data));
+          document.body.className = res.data.theme || "light";
+          setStep(4); // skip to dashboard if already logged in
+        })
+        .catch((err) => {
+          console.error("Error fetching profile:", err);
+        });
+    }
   }, []);
 
   const validateStep = () => {
@@ -65,7 +85,7 @@ function App() {
   const handleSubmit = async () => {
     try {
       const token = localStorage.getItem("token");
-      console.log("Token:", token); // Debug: check if token is null/undefined
+      console.log("Token:", token);
 
       await axios.post(
         "https://onboarding-dashboard.onrender.com/api/preferences",
@@ -81,7 +101,7 @@ function App() {
       );
 
       localStorage.setItem("user", JSON.stringify(formData));
-      document.body.className = theme;
+      document.body.className = formData.theme;
       setStep(4);
     } catch (err) {
       console.error("Error saving preferences:", err);
@@ -124,7 +144,7 @@ function App() {
               handleChange={handleChange}
               formData={formData}
               errors={errors}
-              skipToDashboard={() => setStep(4)} // ✅ passed here
+              skipToDashboard={() => setStep(4)}
             />
           )}
           {step === 2 && (
