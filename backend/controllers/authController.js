@@ -73,3 +73,16 @@ exports.getProfile = async (req, res) => {
     res.status(500).json({ message: "Error fetching profile" });
   }
 };
+exports.updateProfile = async (req, res) => {
+  try {
+    const updates = req.body;
+    const user = await User.findByIdAndUpdate(req.userId, updates, {
+      new: true,
+      runValidators: true,
+    }).select("-password");
+    res.json(user);
+  } catch (err) {
+    console.error("Profile update error:", err);
+    res.status(500).json({ message: "Server error during profile update" });
+  }
+};
