@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "../App.css";
 
-export default function Dashboard({ onUpdateProfileClick }) {
+export default function Dashboard({ onUpdateProfileClick, onLogout }) {
+
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -13,13 +14,10 @@ export default function Dashboard({ onUpdateProfileClick }) {
 
   return (
     <div className="container">
-      <button className="logout"
-        onClick={() => {
-          window.location.reload();
-        }}
-      >
-        Logout
-      </button>
+      <button className="logout" onClick={onLogout}>
+  Logout
+</button>
+
       <h2>Welcome, {user.name}!</h2>
       <p>Email: {user.email}</p>
       <p>Company: {user.company}</p>

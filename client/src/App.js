@@ -83,15 +83,31 @@ function App() {
   const handleSubmit = async () => {
     try {
       const token = localStorage.getItem("token");
-console.log("Sending to PATCH /api/profile:", {
-  name: formData.name,
-  email: formData.email,
-  company: formData.company,
-  industry: formData.industry,
-  size: formData.size,
-  theme: formData.theme,
-  layout: formData.layout,
-});
+      console.log("Sending to PATCH /api/profile:", {
+        name: formData.name,
+        email: formData.email,
+        company: formData.company,
+        industry: formData.industry,
+        size: formData.size,
+        theme: formData.theme,
+        layout: formData.layout,
+      });
+      const handleLogout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        setFormData({
+          name: "",
+          email: "",
+          password: "",
+          company: "",
+          industry: "",
+          size: "",
+          theme: "light",
+          layout: "grid",
+        });
+        setStep(1);
+        document.body.className = "light";
+      };
 
       const res = await axios.patch(
         "https://onboarding-dashboard.onrender.com/api/profile",
@@ -178,6 +194,7 @@ console.log("Sending to PATCH /api/profile:", {
           {step === 4 && !showUpdateProfile && (
             <Dashboard
               onUpdateProfileClick={() => setShowUpdateProfile(true)}
+              onLogout={handleLogout}
             />
           )}
           {step === 4 && showUpdateProfile && (
