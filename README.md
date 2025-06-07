@@ -25,6 +25,9 @@ A full-stack onboarding dashboard web application built with React (frontend) an
 
 ---
 
+## 🖥️ Live Link: [https://onboarding-dashboard-plum.vercel.app](https://onboarding-dashboard-plum.vercel.app)
+
+---
 ## 🔧 Setup Instructions
 
 ### 1. Clone the Repository
