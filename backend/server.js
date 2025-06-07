@@ -8,7 +8,11 @@ const preferenceRoutes = require("./routes/preferenceRoutes");
 
 dotenv.config();
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: "https://onboarding-dashboard-plum.vercel.app", // your Vercel frontend
+  credentials: true
+}));
+
 app.use(express.json());
 
 // DB Connect
